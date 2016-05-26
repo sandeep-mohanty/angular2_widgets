@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--This is required if you are using routing. Not required otherwise -->
+    <base href = "/">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    
+    <title></title>
+
+  </head>
+
+  <body style="background-color: #DFE4E6;">
+    <!-- Your Application gets generated inside "app" tag at runtime -->
+    <app></app>
+    
+    <!-- Use this as the root component for router examples-->
+    <!--<parent-router-component></parent-router-component>-->
+
+    <!-- Bootstrap and its dependency library "jquery" -->
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    
+    <!-- Angular2 shim for IE -->
+    <script src="./assets/js/shims_for_IE.js"></script>
+    
+    <!-- Angular2 and its dependencies-->
+    <script src="./node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="./systemjs.config.js"></script>
+    <script src="./node_modules/zone.js/dist/zone.js"></script>
+    <script src="./node_modules/reflect-metadata/Reflect.js"></script>
+
+
+    <!-- Script that triggers bootstrapping of your app -->
+    <script src="./dist/config/initializer.js"></script>
+    
+  </body>
+</html>
