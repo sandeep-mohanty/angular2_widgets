@@ -12,10 +12,10 @@ import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
                 style="border-color:black; padding:5px;font-weight:bold;"
                 (blur) = "closeControl()">
 
-            <img src = "../../../assets/images/datepicker/datepicker.png" (click) = "onIconClick()">
+            <img src = "../../../assets/images/datepicker/datepicker.png" (click) = "onIconClick($event)">
         </div><br/><br/>
         <div style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
-            <span id="datepicker_container" (mousedown) = "blurFlag = false" (mouseout) = "blurFlag = true">
+            <span id="widget_datepicker_control_container" (mousedown) = "blurFlag = false" (mouseout) = "blurFlag = true">
                 <span [hidden] = "hiddenFlag">
                     <datepicker [(ngModel)]="date" 
                         (ngModelChange) = "onDateChange()" 
@@ -26,7 +26,7 @@ import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
                 </span>
                 <span style= "width:270px;word-wrap: break-word; font-weight:bold">{{helpText}}</span>
             </span>
-        </div>
+        </div><br/><br/>
     `,
     inputs:["datePickerConfig"],
     directives:[DATEPICKER_DIRECTIVES]
@@ -41,6 +41,8 @@ export class DatepickerComponent implements OnInit {
     private dateFormat:string;
     private formattedDate:string;
     private datePickerTextControl:HTMLElement;
+    private datePickerWidgetContainer:HTMLElement;
+    private datePickerInnerContainer:Element;
     
     
     // For date picker control
@@ -66,8 +68,7 @@ export class DatepickerComponent implements OnInit {
         this.maxDate = this.datePickerConfig["maxDate"] || null;
         this.hiddenFlag = true;
         this.blurFlag = true;
-        this.onDateChange();
-        this.datePickerTextControl = document.getElementById("widget_datepicker_text_control");
+        this.onDateChange();     
     }
     
     onDateChange(): void {
@@ -124,8 +125,9 @@ export class DatepickerComponent implements OnInit {
        this.hiddenFlag = this.blurFlag ? true : false;
     }
     
-    onIconClick() {
+    onIconClick(event) {
         this.hiddenFlag = false;
+        this.datePickerTextControl = event.target.parentNode.getElementsByTagName("input")[0];
         this.datePickerTextControl.focus();
     }
     
