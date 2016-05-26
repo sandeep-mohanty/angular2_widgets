@@ -1,12 +1,14 @@
 import {Component, OnInit} from "@angular/core";
+import {Control, Validators, ControlGroup} from "@angular/common";
 import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
     selector: "custom-datepicker",
     template:`
-        <div style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
+        <div [ngFormModel] = "dateControlGroup" style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
             <input id = "widget_datepicker_text_control" type="text" 
                 [placeholder]="dateFormat" 
+                [ngFormControl] = "dateControlGroup.controls['dateInput']"
                 [(ngModel)] = "formattedDate" 
                 maxlength = "10" 
                 size="32" (click) = "hiddenFlag = false" 
@@ -26,7 +28,7 @@ import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
                         [maxDate] = "maxDate" >
                     </datepicker>
                 </span>
-                <span style= "width:270px;word-wrap: break-word; font-weight:bold">{{helpText}}</span>
+                <span style= "width:270px;word-wrap: break-word; font-weight:bold">{{ (errorText) ? errorText : helpText}}</span>
             </span>
         </div><br/><br/>
     `,
@@ -40,11 +42,14 @@ export class DatepickerComponent implements OnInit {
     
     // For date picker textbox
     private helpText:string;
+    private errorText:string;
     private dateFormat:string;
     private formattedDate:string;
     private datePickerTextControl:HTMLElement;
     private datePickerWidgetContainer:HTMLElement;
     private datePickerInnerContainer:Element;
+    private dateControlGroup:ControlGroup;
+    private ngDatePickerTextControl: Control;
     
     
     // For date picker control
@@ -57,6 +62,7 @@ export class DatepickerComponent implements OnInit {
     private blurFlag:boolean;
     
     constructor() {
+
     }
     
     ngOnInit(): void {
@@ -70,9 +76,17 @@ export class DatepickerComponent implements OnInit {
         this.maxDate = this.datePickerConfig["maxDate"] || null;
         this.hiddenFlag = true;
         this.blurFlag = true;
-        this.onDateChange();     
+        this.ngDatePickerTextControl = new Control("", Validators.compose([
+            this.dateControlValidator
+        ]));
+        
+        this.dateControlGroup = new ControlGroup({
+            dateInput: this.ngDatePickerTextControl
+        });
+        this.onDateChange();
+        console.log(this.ngDatePickerTextControl);
     }
-    
+        
     onDateChange(): void {
         this.formattedDate = this.dateToFormattedDate(this.date, this.dateFormat);
         this.hiddenFlag = true;
@@ -123,17 +137,30 @@ export class DatepickerComponent implements OnInit {
         return formattedDate;
     }
     
-    closeControl() {
+    closeControl(): void {
+       
        this.hiddenFlag = this.blurFlag ? true : false;
+       let errorText = "";
+
+       for ( let key in this.ngDatePickerTextControl.errors) {
+           errorText = this.ngDatePickerTextControl.errors[key];
+       }
+       this.errorText = (this.ngDatePickerTextControl.valid) ? "" : errorText;
     }
     
-    onIconClick(event) {
+    onIconClick(event): void {
         this.hiddenFlag = false;
         this.datePickerTextControl = event.target.parentNode.getElementsByTagName("input")[0];
         this.datePickerTextControl.focus();
     }
     
-    insertSlashAsPerFormat(event){
+    insertSlashAsPerFormat(event): any {
+        
+        if (! this.isDigit(event) ) {
+            event.preventDefault();
+            return false;
+        }
+        
         let textControl = event.target;
         let currentDateString = textControl.value;
         let formatTokens = this.dateFormat.split("/");
@@ -142,6 +169,107 @@ export class DatepickerComponent implements OnInit {
         if (currentDateString.length === slashInsertPosition[0] || currentDateString.length === slashInsertPosition[1]) {
             textControl.value += "/";
         } 
+    }
+    
+    isDigit(event): boolean {
+        
+        let charCode = (event.which) ? event.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+    
+    isLeapYear(year): boolean {
+        
+        if ( Number(year) % 4 === 0 ) {
+            
+            if (Number(year) % 100 === 0) {
+                
+                if (Number(year) % 400 === 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+                
+            } else {
+                return true;
+            }
+            
+        } else {
+            return false;
+        }
+    }
+    
+    validateDate(dateString: string, dateFormat, errorObject ):boolean {
+        
+        let dateTokens = dateString.split("/");
+        let formatTokens = dateFormat.split("/");
+        
+        let indexOfYearToken = formatTokens.indexOf("YYYY");
+        let year = Number(dateTokens[indexOfYearToken]);
+        
+        let indexOfMonthToken = formatTokens.indexOf("MM");
+        let month = Number(dateTokens[indexOfYearToken]);
+        
+        let indexOfDayToken = formatTokens.indexOf("DD");
+        let day = Number(dateTokens[indexOfYearToken]);
+        
+        let monthsWith30Days = [4,6,9,11];
+        let monthsWith31Days = [1,3,5,8,10,12];
+        
+        if ( month > 0 && month < 13 ) {
+            
+            if ( (monthsWith31Days.indexOf[month] !== -1) && ( day < 0 || day > 31) ) {
+                
+                errorObject["day"] = "Day should be in the range 1 to 31 for then specified month";
+                return false;
+                
+            } else if ( (monthsWith30Days.indexOf[month] !== -1) && ( day < 0 || day > 30) ) {
+                
+                errorObject["day"] = "Day should be in the range 1 to 30 for then specified month";
+                return false;
+                
+            } else {
+                
+                if (this.isLeapYear(year)) {
+                    
+                    if (day < 0 || day > 29) {
+                        
+                        errorObject["day"] = "Day should be in the range 1 to 29 for then specified month";
+                        return false;
+                        
+                    } else {
+                        errorObject["day"] = "Day should be in the range 1 to 28 for then specified month";
+                        return false;                        
+                    }
+                }
+            }
+            
+            return true;
+            
+        } else {
+            
+            errorObject["month"] = " Month should be in the range 1 to 12";
+            return false;
+        }
+    }
+    
+    dateControlValidator = (control:Control) => {
+
+        let errorObject = {};
+        let dateString = control.value;
+        
+        if (dateString.length < 0 || dateString.length > 10 ){
+            return errorObject["length"] = "Invalid Date string length";
+        }
+        
+        if ( ! this.validateDate(dateString, this.dateFormat, errorObject)) {
+            
+            return errorObject;
+        }
+        
+        return null;
     }
     
 }
