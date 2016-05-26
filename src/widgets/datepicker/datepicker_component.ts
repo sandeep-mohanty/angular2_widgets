@@ -7,10 +7,12 @@ import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
         <div style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
             <input id = "widget_datepicker_text_control" type="text" 
                 [placeholder]="dateFormat" 
-                [value] = "formattedDate" 
+                [(ngModel)] = "formattedDate" 
+                maxlength = "10" 
                 size="32" (click) = "hiddenFlag = false" 
                 style="border-color:black; padding:5px;font-weight:bold;"
-                (blur) = "closeControl()">
+                (blur) = "closeControl()" 
+                (keyup) = "insertSlashAsPerFormat($event)">
 
             <img src = "../../../assets/images/datepicker/datepicker.png" (click) = "onIconClick($event)">
         </div><br/><br/>
@@ -129,6 +131,17 @@ export class DatepickerComponent implements OnInit {
         this.hiddenFlag = false;
         this.datePickerTextControl = event.target.parentNode.getElementsByTagName("input")[0];
         this.datePickerTextControl.focus();
+    }
+    
+    insertSlashAsPerFormat(event){
+        let textControl = event.target;
+        let currentDateString = textControl.value;
+        let formatTokens = this.dateFormat.split("/");
+        let slashInsertPosition = [formatTokens[0].length,formatTokens[0].length + formatTokens[1].length + 1];
+        
+        if (currentDateString.length === slashInsertPosition[0] || currentDateString.length === slashInsertPosition[1]) {
+            textControl.value += "/";
+        } 
     }
     
 }
