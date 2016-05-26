@@ -8,12 +8,14 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var fs = require("fs");
 var PORT = process.env.PORT || 3000;
+var platform = process.platform;
+var networkName = (platform.toLowerCase() === "linux") ? "eth0" : "local area network";
 var app = null;
 var getServerIp = function() {
 
 	for ( var network in ifaces ) {
 
-		if ( network.toLowerCase() === "eth0" ) {
+		if ( network.toLowerCase() === networkName ) {
 			
 			for (var i = 0; i < ifaces[network].length; i += 1) {
 				
@@ -67,7 +69,9 @@ var colors = ["Red"];
     });
     
 	app.listen(PORT, ipaddress, function(){
-		console.log("\nThe server IP address and port details are as follows:\n");
+		console.log("\nThe server IP address, platform and network details are as follows:\n");
+		console.log("Server Platform: " + platform);
+		console.log("Network Name: " + networkName);
 		console.log("Server port: " + PORT + "\nServer address: " + ipaddress);
 	});
 
