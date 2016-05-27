@@ -1,46 +1,10 @@
-import {Component, OnInit, EventEmitter} from "@angular/core";
+import {Component, OnInit, EventEmitter,ElementRef} from "@angular/core";
 import {Control, Validators, ControlGroup} from "@angular/common";
 import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
     selector: "custom-datepicker",
-    template:`
-        <div [ngFormModel] = "dateControlGroup" style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
-            <input id = "widget_datepicker_text_control" type="text" 
-                [placeholder]="dateFormat" 
-                [ngFormControl] = "dateControlGroup.controls['dateInput']"
-                [(ngModel)] = "formattedDate"
-                [class.error] = "displayedTextCssClass" 
-                maxlength = "10" 
-                size="32" 
-                (click) = "hiddenFlag = false" 
-                style="padding:5px;font-weight:bold;"
-                [style.border-color] = "!displayedTextCssClass ? 'black' : 'red'"
-                (blur) = "onLostFocus()"
-                (focus) = "onGotFocus()"
-                (keyup) = "insertSlashAsPerFormat($event)">
-
-            <img src = "../../../assets/images/datepicker/datepicker.png" (click) = "onIconClick($event)">
-        </div><br/><br/>
-        <div style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
-            <span id="widget_datepicker_control_container" (mousedown) = "blurFlag = false" (mouseout) = "blurFlag = true">
-                <span [hidden] = "hiddenFlag">
-                    <datepicker [(ngModel)]="date" 
-                        (ngModelChange) = "onDateChange()" 
-                        [showWeeks]="showWeeks" 
-                        [minDate] = "minDate" 
-                        [maxDate] = "maxDate" >
-                    </datepicker>
-                </span>
-                <span style= "width:270px;word-wrap: break-word; font-weight:bold;"
-                    [class.error] = "displayedTextCssClass"
-                    *ngIf = "showHelpText"
-                >
-                    {{displayedText}}
-                </span>
-            </span>
-        </div><br/><br/>
-    `,
+    templateUrl:"../../../assets/templates/widgets/datepicker/datepicker.html",
     styleUrls: ["../../assets/css/widgets/datepicker/datepicker.css"],
     inputs: ["datePickerConfig"],
     outputs: ["dateChange"],
@@ -48,7 +12,7 @@ import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 })
 export class DatepickerComponent implements OnInit {
     
-    // Config object for date picker control
+    // Config object for date picker control passed by parent component
     private datePickerConfig:any;
     
     // For date picker textbox
@@ -64,6 +28,7 @@ export class DatepickerComponent implements OnInit {
     private datePickerInnerContainer:Element;
     private dateControlGroup:ControlGroup;
     private ngDatePickerTextControl: Control;
+    private immediateFeedbackRequired: boolean;
     
     
     // For date picker control
@@ -75,8 +40,9 @@ export class DatepickerComponent implements OnInit {
     private hiddenFlag:boolean;
     private blurFlag:boolean;
     private dateChange:EventEmitter<{dateString:string, datePickerControl:Control, date:Date}>;
+    private datePickerWell:Element;
     
-    constructor() {
+    constructor(private elementRef: ElementRef) {
         this.dateChange = new EventEmitter<{dateString:string, datePickerControl:Control, date:Date}>();
     }
     
@@ -95,10 +61,12 @@ export class DatepickerComponent implements OnInit {
         this.blurFlag = true;
         this.displayedText = this.helpText;
         this.displayedTextCssClass = false;
+        this.immediateFeedbackRequired = this.datePickerConfig["immediateFeedbackRequired"] || false;
         this.ngDatePickerTextControl = new Control("", Validators.compose([
             this.dateControlValidator
         ]));
         
+        console.dir(this.elementRef.nativeElement);
         
         if (this.datePickerConfig["form"] && this.datePickerConfig["form"] instanceof ControlGroup) {
             this.dateControlGroup = this.datePickerConfig["form"];
@@ -109,12 +77,11 @@ export class DatepickerComponent implements OnInit {
             });
         }
 
-        
         this.onDateChange();
     }
         
     onDateChange(): void {
-        console.log(this.date);
+
         this.formattedDate = this.dateToFormattedDate(this.date, this.dateFormat);
         this.hiddenFlag = true;
         this.dateChange.emit({
@@ -172,45 +139,9 @@ export class DatepickerComponent implements OnInit {
     onLostFocus(): void {
  
        this.hiddenFlag = this.blurFlag ? true : false;
-       let errorText = "";
-
-       for ( let key in this.ngDatePickerTextControl.errors) {
-           errorText = (this.ngDatePickerTextControl.errors[key] === "" ) ? errorText: this.ngDatePickerTextControl.errors[key];
-       }
        
-       this.displayedText = (this.ngDatePickerTextControl.valid) ? this.helpText : errorText;
-       
-       if (this.displayedText === this.helpText ) {
-           this.displayedTextCssClass = false;
-       } else {
-           this.displayedTextCssClass = true;
-       }
-       
-       if (this.ngDatePickerTextControl.valid) {
-           let dateTokens = this.formattedDate.split("/");
-           let formatTokens = this.dateFormat.split("/");
-
-           let indexOfYearToken = formatTokens.indexOf("YYYY");
-           let year = Number(dateTokens[indexOfYearToken]);
-
-
-           let indexOfMonthToken = formatTokens.indexOf("MM");
-           let month = Number(dateTokens[indexOfMonthToken]);
-
-
-           let indexOfDayToken = formatTokens.indexOf("DD");
-           let day = Number(dateTokens[indexOfDayToken]);
-
-           
-           let validDate = new Date(month + "/" + day + "/" + year);
-           this.date = validDate;
-           
-           this.dateChange.emit({
-                dateString: this.formattedDate,
-                datePickerControl:this.ngDatePickerTextControl,
-                date: this.date
-            });       
-       }
+       // Go ahead and check for validation errors and update css and help text accordingly
+       this.prepareErrorFeedback();
     }
     
     onGotFocus(): void {
@@ -243,7 +174,14 @@ export class DatepickerComponent implements OnInit {
                 textControl.value += "/";
             }
             
-        } 
+        }
+    }
+    
+    immediateFeedback() {
+        
+        if (this.immediateFeedbackRequired) {
+            this.prepareErrorFeedback();
+        }
     }
     
     isDigit(event): boolean {
@@ -251,7 +189,8 @@ export class DatepickerComponent implements OnInit {
         let charCode = (event.which) ? event.which : event.keyCode;
         let dateTextTokens = event.target.value.split("");
         
-        if (charCode > 31 && (charCode < 48 || charCode > 57) || charCode === 8) {
+        if (charCode > 31 && ((charCode < 48 || charCode > 57) || charCode === 8) && charCode !== 37
+            && charCode !== 39 ) {
             
             let offendingChar = String.fromCharCode(charCode);            
             let index = dateTextTokens.indexOf(offendingChar);
@@ -369,11 +308,11 @@ export class DatepickerComponent implements OnInit {
         let validDate = new Date(month + "/" + day + "/" + year);
         
         if ( this.minDate && (validDate < this.minDate)) {
-            errorObject["rangeError"] = "Date is lower than the lower permissible range";
+            errorObject["rangeError"] = "Date is lower than the lowest permissible date";
             return false;
         } else if (( this.maxDate && (validDate > this.maxDate))) {
             
-            errorObject["rangeError"] = "Date is higher than the higher permissible range";
+            errorObject["rangeError"] = "Date is higher than the highest permissible date";
             return false;
         }
         
@@ -395,6 +334,49 @@ export class DatepickerComponent implements OnInit {
         }
         
         return null;
+    }
+    
+    prepareErrorFeedback():void {
+        
+      let errorText = "";
+
+       for ( let key in this.ngDatePickerTextControl.errors) {
+           errorText = (this.ngDatePickerTextControl.errors[key] === "" ) ? errorText: this.ngDatePickerTextControl.errors[key];
+       }
+       
+       this.displayedText = (this.ngDatePickerTextControl.valid) ? this.helpText : errorText;
+       
+       if (this.displayedText === this.helpText ) {
+           this.displayedTextCssClass = false;
+       } else {
+           this.displayedTextCssClass = true;
+       }
+       
+       if (this.ngDatePickerTextControl.valid) {
+           let dateTokens = this.formattedDate.split("/");
+           let formatTokens = this.dateFormat.split("/");
+
+           let indexOfYearToken = formatTokens.indexOf("YYYY");
+           let year = Number(dateTokens[indexOfYearToken]);
+
+
+           let indexOfMonthToken = formatTokens.indexOf("MM");
+           let month = Number(dateTokens[indexOfMonthToken]);
+
+
+           let indexOfDayToken = formatTokens.indexOf("DD");
+           let day = Number(dateTokens[indexOfDayToken]);
+
+           
+           let validDate = new Date(month + "/" + day + "/" + year);
+           this.date = validDate;
+           
+           this.dateChange.emit({
+                dateString: this.formattedDate,
+                datePickerControl:this.ngDatePickerTextControl,
+                date: this.date
+            });       
+       }
     }
     
 }

@@ -10,5 +10,5 @@ export interface DatepickerConfigInterface{
    showWeeks ?: boolean; // Whether to show weeks in the date picker control. Default is false.
    showHelpText ?: boolean; // Whether help text needs to be shown.
    form ?: ControlGroup; // The control group to which the datepicker control needs to be added.
-   
+   immediateFeedbackRequired: boolean // If true, the date entered in textboc gets validated on each keypress
 }
