@@ -306,11 +306,11 @@ export class DatepickerComponent implements OnInit {
         let validDate = new Date(month + "/" + day + "/" + year);
         
         if ( this.minDate && (validDate < this.minDate)) {
-            errorObject["rangeError"] = "Date is lower than the lowest permissible date";
+            errorObject["rangeError"] = "Date is less than the lowest permissible date";
             return false;
         } else if (( this.maxDate && (validDate > this.maxDate))) {
             
-            errorObject["rangeError"] = "Date is higher than the highest permissible date";
+            errorObject["rangeError"] = "Date is greater than the highest permissible date";
             return false;
         }
         
