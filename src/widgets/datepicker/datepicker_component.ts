@@ -42,7 +42,7 @@ export class DatepickerComponent implements OnInit {
     private dateChange:EventEmitter<{dateString:string, datePickerControl:Control, date:Date}>;
     private datePickerWell:Element;
     
-    constructor(private elementRef: ElementRef) {
+    constructor() {
         this.dateChange = new EventEmitter<{dateString:string, datePickerControl:Control, date:Date}>();
     }
     
@@ -65,8 +65,6 @@ export class DatepickerComponent implements OnInit {
         this.ngDatePickerTextControl = new Control("", Validators.compose([
             this.dateControlValidator
         ]));
-        
-        console.dir(this.elementRef.nativeElement);
         
         if (this.datePickerConfig["form"] && this.datePickerConfig["form"] instanceof ControlGroup) {
             this.dateControlGroup = this.datePickerConfig["form"];
