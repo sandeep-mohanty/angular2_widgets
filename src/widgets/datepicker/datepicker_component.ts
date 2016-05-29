@@ -144,9 +144,9 @@ export class DatepickerComponent implements OnInit {
     
     onGotFocus(): void {
 
-        this.displayedTextCssClass = false;
+        this.displayedTextCssClass = (this.immediateFeedback && !this.ngDatePickerTextControl.valid) ? true : false;
         this.displayedText = this.helpText;
-    }
+    } 
     
     onIconClick(event): void {
         this.hiddenFlag = false;
@@ -155,7 +155,9 @@ export class DatepickerComponent implements OnInit {
     }
     
     insertSlashAsPerFormat(event): any {
-
+        
+        this.blurFlag = true;
+        
         if (! this.isDigit(event) ) {
             event.preventDefault();
             return false;
