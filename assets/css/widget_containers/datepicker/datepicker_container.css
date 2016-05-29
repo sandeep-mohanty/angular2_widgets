@@ -1,0 +1,18 @@
+.middle {
+    display: inline-block; 
+    min-height: 290px; 
+    position:  absolute;left: 50%; 
+    margin-left: -130px;
+}
+
+.inputbox {
+    padding:5px;
+    font-weight:bold;
+    border-color: black;
+    max-width:18em;
+}
+
+.title {
+    color:black;
+    font-weight:bold;
+}

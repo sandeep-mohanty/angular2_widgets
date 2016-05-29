@@ -1,5 +1,11 @@
-<div align="center"><h2>{{datePickerTitle}}</h2></div> <br/>
-<div style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
+<div class="middle">
+    <h3>
+        <span class="title">
+        {{datePickerTitle}}
+        </span>
+    </h3>
+</div> <br/> <br/> <br/> <br/>
+<div class="middle">
     <label>Form Submission Date</label>
 </div><br/>
 <custom-datepicker [datePickerConfig] = "datePickerConfig" (dateChange) = "showDateChangeResult($event)" ></custom-datepicker>

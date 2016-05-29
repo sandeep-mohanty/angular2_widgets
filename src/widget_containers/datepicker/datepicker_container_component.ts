@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {Control, Validators, ControlGroup} from "@angular/common";
+import {Control, Validators, ControlGroup,FORM_DIRECTIVES} from "@angular/common";
 import {DatepickerComponent} from "../../widgets/datepicker/datepicker_component";
 import {DatepickerConfigInterface} from "../../widgets/datepicker/datepicker_config_interface";
 
@@ -7,14 +7,12 @@ import {DatepickerConfigInterface} from "../../widgets/datepicker/datepicker_con
     
     selector: "datepicker-container",
     templateUrl: "../../../assets/templates/widget_containers/datepicker/datepicker_container.html",
-    directives: [DatepickerComponent]
+    styleUrls: ["../../../assets/css/widget_containers/datepicker/datepicker_container.css"],
+    directives: [DatepickerComponent,FORM_DIRECTIVES]
 })
 
 export class DatepickerContainerComponent {
-    
- private color:string;
-    private backgroundColor:string;
-    
+
     // Date picker properties
     private datePickerTitle:string;
     private datePickerConfig:DatepickerConfigInterface;
@@ -23,7 +21,7 @@ export class DatepickerContainerComponent {
     constructor() {
 
         // Date picker properties
-        this.datePickerTitle = "Date Picker";
+        this.datePickerTitle = "Date Picker Widget";
         this.datePickerConfig = {
             
             initDate: null,

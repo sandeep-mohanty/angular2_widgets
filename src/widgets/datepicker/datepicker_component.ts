@@ -5,7 +5,7 @@ import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 @Component({
     selector: "custom-datepicker",
     templateUrl:"../../../assets/templates/widgets/datepicker/datepicker.html",
-    styleUrls: ["../../assets/css/widgets/datepicker/datepicker.css"],
+    styleUrls: ["../../../assets/css/widgets/datepicker/datepicker.css"],
     inputs: ["datePickerConfig"],
     outputs: ["dateChange"],
     directives: [DATEPICKER_DIRECTIVES]
@@ -255,7 +255,7 @@ export class DatepickerComponent implements OnInit {
              !dateTokens[indexOfMonthToken] || dateTokens[indexOfMonthToken].length !== 2 || 
              !dateTokens[indexOfYearToken] || dateTokens[indexOfYearToken].length !== 4) {
 
-            errorObject["invalidFormat"] = "Invalid Format. Please check the format";
+            errorObject["invalidFormat"] = "Invalid date format. Please check the format";
             return false;
         }
         
