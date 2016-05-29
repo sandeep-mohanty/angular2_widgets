@@ -1,41 +1,43 @@
-       <div [ngFormModel] = "dateControlGroup" style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
-            <input id = "widget_datepicker_text_control" type="text" 
-                [placeholder]="dateFormat" 
-                [ngFormControl] = "dateControlGroup.controls['dateInput']"
-                [(ngModel)] = "formattedDate"
-                [class.error] = "displayedTextCssClass" 
-                maxlength = "10" 
-                size="32" 
-                (click) = "hiddenFlag = false" 
-                style="padding:5px;font-weight:bold;max-width:18em;"
-                [style.border-color] = "!displayedTextCssClass ? 'black' : 'red'"
-                (blur) = "onLostFocus()"
-                (focus) = "onGotFocus()"
-                (keyup) = "insertSlashAsPerFormat($event)"
-                (keyup) = "immediateFeedback()">
+<div (mousedown) = "blurFlag = false" 
+    (mouseout) = "blurFlag = true"
+    >
+    <div [ngFormModel] = "dateControlGroup" style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
+        <input id = "widget_datepicker_text_control" type="text" 
+            [placeholder]="dateFormat" 
+            [ngFormControl] = "dateControlGroup.controls['dateInput']"
+            [(ngModel)] = "formattedDate"
+            [class.error] = "displayedTextCssClass" 
+            maxlength = "10" 
+            size="32" 
+            (click) = "onInputButtonClick($event)" 
+            style="padding:5px;font-weight:bold;max-width:18em;"
+            [style.border-color] = "!displayedTextCssClass ? 'black' : 'red'"
+            (blur) = "onLostFocus()"
+            (focus) = "onGotFocus()"
+            (keyup) = "insertSlashAsPerFormat($event)"
+            (keyup) = "immediateFeedback()">
 
-            <img src = "../../../assets/images/widgets/datepicker/datepicker.png" (click) = "onIconClick($event)">
-        </div><br/><br/>
-        <div style="display:inline-block; min-height:270px; position: absolute;left: 50%; margin-left: -130px;">
-            <div id="widget_datepicker_control_container" 
-                (mousedown) = "blurFlag = false" 
-                (mouseout) = "blurFlag = true"
-                style= "max-width:270px;">
-                <span [hidden] = "hiddenFlag">
-                    <datepicker [(ngModel)]="date" 
-                        (ngModelChange) = "onDateChange()" 
-                        [showWeeks]="showWeeks" 
-                        [minDate] = "minDate" 
-                        [maxDate] = "maxDate" >
-                    </datepicker>
-                </span>
-            </div>
-            <div style= "max-width:25em;word-wrap: break-word; font-weight:bold;">
-                <span 
-                    [class.error] = "displayedTextCssClass"
-                    *ngIf = "showHelpText"
-                >
-                    {{displayedText}}
-                </span>
-            </div>
+        <img src = "../../../assets/images/widgets/datepicker/datepicker.png" (click) = "onIconClick($event)">
+    </div><br/><br/>
+    <div style="display:inline-block; min-height:270px; position: absolute;left: 50%; margin-left: -130px;">
+        <div 
+            style= "max-width:270px;">
+            <span [hidden] = "hiddenFlag">
+                <datepicker [(ngModel)]="date" 
+                    (ngModelChange) = "onDateChange()" 
+                    [showWeeks]="showWeeks" 
+                    [minDate] = "minDate" 
+                    [maxDate] = "maxDate" >
+                </datepicker>
+            </span>
         </div>
+        <div style= "max-width:25em;word-wrap: break-word; font-weight:bold;">
+            <span 
+                [class.error] = "displayedTextCssClass"
+                *ngIf = "showHelpText"
+            >
+                {{displayedText}}
+            </span>
+        </div>
+    </div>
+</div>

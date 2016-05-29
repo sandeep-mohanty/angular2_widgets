@@ -149,10 +149,16 @@ export class DatepickerComponent implements OnInit {
         this.displayedText = this.helpText;
     } 
     
-    onIconClick(event): void {
+    onInputButtonClick(event){
         this.hiddenFlag = false;
+        event.target.focus();
+    }
+    
+    onIconClick(event): void {
+        
         this.datePickerTextControl = event.target.parentNode.getElementsByTagName("input")[0];
         this.datePickerTextControl.focus();
+        this.hiddenFlag = !this.hiddenFlag;
     }
     
     insertSlashAsPerFormat(event): any {
