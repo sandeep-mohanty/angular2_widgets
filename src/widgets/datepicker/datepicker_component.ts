@@ -82,6 +82,7 @@ export class DatepickerComponent implements OnInit {
 
         this.formattedDate = this.dateToFormattedDate(this.date, this.dateFormat);
         this.hiddenFlag = true;
+        this.blurFlag = true;
         this.dateChange.emit({
             dateString: this.formattedDate,
             datePickerControl: this.ngDatePickerTextControl,
