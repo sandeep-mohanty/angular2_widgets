@@ -35,11 +35,11 @@ export class DatepickerContainerComponent {
             immediateFeedbackRequired: false
         };
         this.datePickerConfig["helpText"] = "";
-        this.datePickerConfig["dateFormat"] = "YYYY/DD/MM";
+        this.datePickerConfig["dateFormat"] = "MM/DD/YYYY";
         this.datePickerConfig["initDate"] = new Date("12/31/2016");
         this.datePickerConfig["showWeeks"] = false;
-        this.datePickerConfig["minDate"] = new Date("09/27/2012");
-        this.datePickerConfig["maxDate"] = new Date("01/31/2017");
+        this.datePickerConfig["minDate"] = new Date("09/27/1970");
+        this.datePickerConfig["maxDate"] = new Date("01/31/2025");
         this.datePickerConfig["showHelpText"] = true;
         this.datePickerConfig["immediateFeedbackRequired"] = true;
         

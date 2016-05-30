@@ -88,6 +88,12 @@ export class DatepickerComponent implements OnInit {
             datePickerControl: this.ngDatePickerTextControl,
             date:this.date
         });
+        
+        //Since this event is triggered only when date is triggered via date picker control, we need to check for errors
+        if (!this.immediateFeedbackRequired) {
+            this.displayedTextCssClass = false;
+            this.displayedText =  this.helpText;
+        }
     }
     
     dateToFormattedDate(date:Date,format:string): string {
@@ -144,9 +150,10 @@ export class DatepickerComponent implements OnInit {
     }
     
     onGotFocus(): void {
-
+        this.hiddenFlag = false;
         this.displayedTextCssClass = (this.immediateFeedback && !this.ngDatePickerTextControl.valid) ? true : false;
         this.displayedText = this.helpText;
+
     } 
     
     onInputButtonClick(event){
@@ -156,9 +163,9 @@ export class DatepickerComponent implements OnInit {
     
     onIconClick(event): void {
         
+        this.hiddenFlag = !this.hiddenFlag;
         this.datePickerTextControl = event.target.parentNode.getElementsByTagName("input")[0];
         this.datePickerTextControl.focus();
-        this.hiddenFlag = !this.hiddenFlag;
     }
     
     insertSlashAsPerFormat(event): any {
@@ -377,6 +384,8 @@ export class DatepickerComponent implements OnInit {
            
            let validDate = new Date(month + "/" + day + "/" + year);
            this.date = validDate;
+           
+           this.displayedTextCssClass = false;
            
            this.dateChange.emit({
                 dateString: this.formattedDate,
