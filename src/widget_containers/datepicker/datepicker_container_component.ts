@@ -41,7 +41,7 @@ export class DatepickerContainerComponent {
         this.datePickerConfig["minDate"] = new Date("09/27/1970");
         this.datePickerConfig["maxDate"] = new Date("01/31/2025");
         this.datePickerConfig["showHelpText"] = true;
-        this.datePickerConfig["immediateFeedbackRequired"] = true;
+        this.datePickerConfig["immediateFeedbackRequired"] = false;
         
         let testControl = new Control("",Validators.required);
         this.datePickerConfig["form"] = new ControlGroup({
