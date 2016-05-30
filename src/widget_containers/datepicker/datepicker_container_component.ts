@@ -32,7 +32,7 @@ export class DatepickerContainerComponent {
             showWeeks: false,
             showHelpText: true,
             form: null,
-            immediateFeedbackRequired: false
+            immediateFeedbackRequired: true
         };
         this.datePickerConfig["helpText"] = "";
         this.datePickerConfig["dateFormat"] = "MM/DD/YYYY";
