@@ -1,3 +1,14 @@
 .well {
     background-color: #97A097;
 }
+
+.title {
+    color:black;
+    font-weight:bold;
+    font-family: 'Segoe UI';
+}
+.page-header-title {
+    font-weight:bold;
+    font-family: 'Segoe UI';
+    font-size: xx-large;
+}

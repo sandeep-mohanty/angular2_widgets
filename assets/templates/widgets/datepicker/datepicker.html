@@ -1,7 +1,7 @@
 <span (mousedown) = "blurFlag = false" 
     (mouseout) = "blurFlag = true"
-    >
-    <div [ngFormModel] = "dateControlGroup" style="display:inline-block; min-height:290px; position: absolute;left: 50%; margin-left: -130px;">
+    style="display: inline-block">
+    <span [ngFormModel] = "dateControlGroup">
         <input id = "widget_datepicker_text_control" type="text" 
             [placeholder]="dateFormat" 
             [ngFormControl] = "dateControlGroup.controls['dateInput']"
@@ -18,10 +18,9 @@
             (keyup) = "immediateFeedback()">
 
         <img src = "../../../assets/images/widgets/datepicker/datepicker.png" (click) = "onIconClick($event)">
-    </div><br/><br/>
-    <div style="display:inline-block; min-height:270px; position: absolute;left: 50%; margin-left: -130px;">
-        <div 
-            style= "max-width:270px;">
+    </span>
+    <div>
+        <div style="display: inline-block">
             <span [hidden] = "hiddenFlag">
                 <datepicker [(ngModel)]="date" 
                     (ngModelChange) = "onDateChange()" 
@@ -31,7 +30,7 @@
                 </datepicker>
             </span>
         </div>
-        <div style= "max-width:25em;word-wrap: break-word; font-weight:bold;">
+        <div style="max-width:25em;word-wrap: break-word; font-weight:bold;">
             <span 
                 [class.error] = "displayedTextCssClass"
                 *ngIf = "showHelpText"

@@ -394,5 +394,5 @@ export class DatepickerComponent implements OnInit {
             });       
        }
     }
-    
+
 }

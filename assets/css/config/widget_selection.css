@@ -1,0 +1,18 @@
+.title {
+    color:black;
+    font-weight:bold;
+    font-family: 'Segoe UI';
+    font-size: larger;
+}
+
+.panel-rounded {
+    border-radius: 15px;
+}
+
+.panel-header{
+    background-color:#A8CD1B;
+}
+
+.panel-body {
+    background-color:#F3FAB6;
+}
