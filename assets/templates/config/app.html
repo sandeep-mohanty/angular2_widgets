@@ -3,10 +3,10 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-3" style="min-height:650px;background-color:#D9E0D6;">
+        <div class="col-lg-3 col-md-3 col-sm-2" style="min-height:650px;background-color:#D9E0D6;">
             <widget-selection [widgetList] = "_widgetList" (selectionChange) = "updateSelection($event)"></widget-selection>
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-9 col-md-9 col-sm-10">
             <div *ngIf = "_widgetList['datepicker']" >
                 <datepicker-container></datepicker-container>
             </div>

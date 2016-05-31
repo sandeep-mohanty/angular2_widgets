@@ -1,0 +1,66 @@
+<section class="panel panel-default">
+
+    <div class="panel-heading panel-header">
+        <label class="title">Date Picker Configurations</label>
+    </div>
+    <section class="panel-body">
+        <form>
+            <strong>
+                Initial Date:
+            </strong>
+            <span style="padding-left:15px">
+                <input type="text" placeholder="only in MM/DD/YYYY">
+            </span><br/>
+            
+            <strong>
+                Date format:
+            </strong>
+            <span style="padding-left:10px">
+                <select name="dateformat" style="width:38%;">
+                    <option value="MM/DD/YYYY">MM/DD/YYYY</option> 
+                    <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
+                    <option value="YYYY/DD/MM">YYYY/DD/MM</option>
+                    <option value="YYYY/MM/DD">YYYY/MM/DD</option>
+                </select>
+            </span><br/>
+            <span style="padding-right:10px">
+                <strong>
+                    Show Help Text:
+                </strong>
+            </span>
+            <input type="checkbox" #showtext (click)="0"><br/>
+            <span style="padding-right:10px" *ngIf = "showtext.checked" >
+                <strong>
+                    Help Text:
+                </strong>
+                <input type="text"><br/>
+            </span>
+            <span style="padding-right:10px">
+                <strong>
+                    Show Weeks:
+                </strong>
+            </span>
+            <input type="checkbox"><br/>
+            <span style="padding-right:10px">
+                <strong>
+                    Immediate Feedback Required:
+                </strong>
+            </span>
+            <input type="checkbox"><br/>
+            <strong>
+                Minimum Permissible Date:
+            </strong>
+            <span style="padding-left:15px">
+                <input type="text" placeholder="only in MM/DD/YYYY">
+            </span><br/>
+            <strong>
+                Maximum Permissible Date:
+            </strong>
+            <span style="padding-left:15px">
+                <input type="text" placeholder="only in MM/DD/YYYY">
+            </span><br/>
+            
+        </form>
+    <section>
+
+</section>

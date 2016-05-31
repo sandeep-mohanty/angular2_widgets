@@ -19,7 +19,7 @@ export class Demo_App implements OnInit {
     private _widgetList:boolean[];
 
     constructor() {
-        this.title = "Welcome To Angular2 Widgets";
+        this.title = "Angular2 UI Control Components";
         this.color = "white";
         this.backgroundColor = "green";
         this._widgetList = [];

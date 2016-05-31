@@ -2,13 +2,14 @@ import {Component} from "@angular/core";
 import {Control, Validators, ControlGroup,FORM_DIRECTIVES} from "@angular/common";
 import {DatepickerComponent} from "../../widgets/datepicker/datepicker_component";
 import {DatepickerConfigInterface} from "../../widgets/datepicker/datepicker_config_interface";
+import {DatePickerConfigComponent} from "./datepicker_container_config_component";
 
 @Component({
     
     selector: "datepicker-container",
     templateUrl: "../../../assets/templates/widget_containers/datepicker/datepicker_container.html",
     styleUrls: ["../../../assets/css/widget_containers/datepicker/datepicker_container.css"],
-    directives: [DatepickerComponent,FORM_DIRECTIVES]
+    directives: [DatepickerComponent,FORM_DIRECTIVES,DatePickerConfigComponent]
 })
 
 export class DatepickerContainerComponent {

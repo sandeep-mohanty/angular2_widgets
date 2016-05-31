@@ -20,8 +20,8 @@
         <img src = "../../../assets/images/widgets/datepicker/datepicker.png" (click) = "onIconClick($event)">
     </span>
     <div>
-        <div style="display: inline-block">
-            <span [hidden] = "hiddenFlag">
+        <div style="max-width:270px;">
+            <span [hidden] = "hiddenFlag" >
                 <datepicker [(ngModel)]="date" 
                     (ngModelChange) = "onDateChange()" 
                     [showWeeks]="showWeeks" 
