@@ -11,4 +11,13 @@ import {DatepickerConfigInterface} from "../../widgets/datepicker/datepicker_con
 export class DatePickerConfigComponent {
     
     private configSubmit: EventEmitter<DatepickerConfigInterface>;
+    private _show_hide_config: boolean;
+    
+    constructor() {
+        this._show_hide_config = false;
+    }
+    
+    showHideConfig(){
+        this._show_hide_config = !this._show_hide_config;
+    }
 }

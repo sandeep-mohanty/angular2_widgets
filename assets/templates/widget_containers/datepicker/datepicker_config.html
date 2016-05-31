@@ -2,8 +2,9 @@
 
     <div class="panel-heading panel-header">
         <label class="title">Date Picker Configurations</label>
+        <button (click)="showHideConfig()"><strong>{{_show_hide_config ? 'Hide' : 'Show'}}</strong></button>
     </div>
-    <section class="panel-body">
+    <section class="panel-body" [hidden]="!_show_hide_config">
         <form>
             <strong>
                 Initial Date:
@@ -50,7 +51,7 @@
             <strong>
                 Minimum Permissible Date:
             </strong>
-            <span style="padding-left:15px">
+            <span style="padding-left:17px">
                 <input type="text" placeholder="only in MM/DD/YYYY">
             </span><br/>
             <strong>
