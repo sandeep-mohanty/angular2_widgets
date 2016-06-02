@@ -16,11 +16,13 @@ export class DatepickerContainerComponent {
 
     // Date picker properties
     private datePickerTitle:string;
+    private configChangeFlag:boolean;
     private datePickerConfig:DatepickerConfigInterface;
 
     
     constructor() {
-
+         
+        this.configChangeFlag = true;
         // Date picker properties
         this.datePickerTitle = "Date Picker Widget";
         this.datePickerConfig = {
@@ -54,6 +56,14 @@ export class DatepickerContainerComponent {
     showDateChangeResult(data) {
         console.dir(data);
         console.dir(this.datePickerConfig["form"]);
+    }
+    
+    updateConfigChangeFlag(){
+        this.configChangeFlag = false;
+        setTimeout(() => {
+           this.configChangeFlag = true; 
+        },0);
+        
     }
     
 }

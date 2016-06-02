@@ -5,19 +5,19 @@
         <button (click)="showHideConfig()"><strong>{{_show_hide_config ? 'Hide' : 'Show'}}</strong></button>
     </div>
     <section class="panel-body" [hidden]="!_show_hide_config">
-        <form>
+        <form (ngSubmit) = "applySettings(f.value)" #f="ngForm">
             <strong>
                 Initial Date:
             </strong>
             <span style="padding-left:15px">
-                <input type="text" placeholder="only in MM/DD/YYYY">
+                <input ngControl = "initDate" type="text" placeholder="only in MM/DD/YYYY">
             </span><br/>
             
             <strong>
                 Date format:
             </strong>
             <span style="padding-left:10px">
-                <select name="dateformat" style="width:38%;">
+                <select ngControl = "dateFormat" name="dateformat" style="width:45%;">
                     <option value="MM/DD/YYYY">MM/DD/YYYY</option> 
                     <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
                     <option value="YYYY/DD/MM">YYYY/DD/MM</option>
@@ -29,38 +29,40 @@
                     Show Help Text:
                 </strong>
             </span>
-            <input type="checkbox" #showtext (click)="0"><br/>
-            <span style="padding-right:10px" *ngIf = "showtext.checked" >
-                <strong>
+            <input ngControl = "showHelpText" type="checkbox" #showtext (click)="0"><br/>
+            <span  *ngIf = "showtext.checked" >
+                <strong style="padding-right:25px">
                     Help Text:
                 </strong>
-                <input type="text"><br/>
+                <input ngControl = "helpText" type="text"><br/>
             </span>
             <span style="padding-right:10px">
                 <strong>
                     Show Weeks:
                 </strong>
             </span>
-            <input type="checkbox"><br/>
+            <input ngControl = "showWeeks" type="checkbox"><br/>
             <span style="padding-right:10px">
                 <strong>
                     Immediate Feedback Required:
                 </strong>
             </span>
-            <input type="checkbox"><br/>
+            <input ngControl = "immediateFeedbackRequired" type="checkbox"><br/>
             <strong>
                 Minimum Permissible Date:
             </strong>
             <span style="padding-left:17px">
-                <input type="text" placeholder="only in MM/DD/YYYY">
+                <input ngControl = "minDate" type="text" placeholder="only in MM/DD/YYYY">
             </span><br/>
             <strong>
                 Maximum Permissible Date:
             </strong>
             <span style="padding-left:15px">
-                <input type="text" placeholder="only in MM/DD/YYYY">
+                <input ngControl = "maxDate" type="text" placeholder="only in MM/DD/YYYY">
             </span><br/>
-            
+            <span>
+                <button type="submit">Apply</button>
+            </span>
         </form>
     <section>
 

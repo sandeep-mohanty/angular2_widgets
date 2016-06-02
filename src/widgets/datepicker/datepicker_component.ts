@@ -90,10 +90,10 @@ export class DatepickerComponent implements OnInit {
         });
         
         //Since this event is triggered only when date is triggered via date picker control, we need to check for errors
-        if (!this.immediateFeedbackRequired) {
-            this.displayedTextCssClass = false;
-            this.displayedText =  this.helpText;
-        }
+
+       this.displayedTextCssClass = false;
+       this.displayedText =  this.helpText;
+
     }
     
     dateToFormattedDate(date:Date,format:string): string {
