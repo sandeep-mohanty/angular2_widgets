@@ -3,6 +3,7 @@ import {ControlGroup} from "@angular/common";
 export interface DatepickerConfigInterface{
     
    initDate ?: Date; // The initial value of the datepicker control. Default value is current date.
+   disableTyping ?: boolean; // Whether manually typing of date should be allowed. 
    dateFormat ?: string; // Date format for the datepicker control. Default format is "MM/DD/YYYY".
    helpText ?: string; // Help text for user. Default value is "Enter date in the specified format".
    minDate ?: Date; // Minimum allowable date for the date picker control.

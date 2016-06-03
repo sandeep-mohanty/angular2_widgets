@@ -26,13 +26,19 @@
             </span><br/>
             <span style="padding-right:10px">
                 <strong>
+                    Disable Typing:
+                </strong>
+            </span>
+            <input ngControl = "disableTyping" type="checkbox" ><br/>
+            <span style="padding-right:10px">
+                <strong>
                     Show Help Text:
                 </strong>
             </span>
             <input ngControl = "showHelpText" type="checkbox" #showtext (click)="0"><br/>
             <span  *ngIf = "showtext.checked" >
                 <strong style="padding-right:25px">
-                    Help Text:
+                    Custom Help Text:
                 </strong>
                 <input ngControl = "helpText" type="text"><br/>
             </span>

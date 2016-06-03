@@ -34,6 +34,7 @@ export class DatePickerConfigComponent {
         this.configuration.immediateFeedbackRequired = configurations.immediateFeedbackRequired;
         this.configuration.showWeeks = configurations.showWeeks;
         this.configuration.helpText = configurations.helpText;
+        this.configuration.disableTyping = configurations.disableTyping;
         this.configSubmit.emit(this.configuration);
     }
     

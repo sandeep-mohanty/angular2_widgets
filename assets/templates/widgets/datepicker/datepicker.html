@@ -3,6 +3,7 @@
     style="display: inline-block">
     <span [ngFormModel] = "dateControlGroup">
         <input id = "widget_datepicker_text_control" type="text" 
+            [disabled] = "disableTyping" 
             [placeholder]="dateFormat" 
             [ngFormControl] = "dateControlGroup.controls['dateInput']"
             [(ngModel)] = "formattedDate"

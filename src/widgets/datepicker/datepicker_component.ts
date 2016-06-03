@@ -17,6 +17,7 @@ export class DatepickerComponent implements OnInit {
     
     // For date picker textbox
     private helpText:string;
+    private disableTyping:boolean;
     private errorText:string;
     private showHelpText: boolean;
     private displayedText:string;
@@ -59,6 +60,7 @@ export class DatepickerComponent implements OnInit {
         this.showHelpText = this.datePickerConfig["showHelpText"] ? this.datePickerConfig["showHelpText"]: false;
         this.hiddenFlag = true;
         this.blurFlag = true;
+        this.disableTyping = this.datePickerConfig["disableTyping"] ? this.datePickerConfig["disableTyping"] : false;
         this.displayedText = this.helpText;
         this.displayedTextCssClass = false;
         this.immediateFeedbackRequired = this.datePickerConfig["immediateFeedbackRequired"] || false;
