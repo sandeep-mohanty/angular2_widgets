@@ -20,24 +20,22 @@
 
         <img src = "../../../assets/images/widgets/datepicker/datepicker.png" (click) = "onIconClick($event)">
     </span>
-    <div>
-        <div [style.maxwidth] = "showWeeks ? '280px' : '270px'">
-            <span [hidden] = "hiddenFlag" >
-                <datepicker [(ngModel)]="date" 
-                    (ngModelChange) = "onDateChange()" 
-                    [showWeeks]="showWeeks" 
-                    [minDate] = "minDate" 
-                    [maxDate] = "maxDate" >
-                </datepicker>
-            </span>
-        </div>
-        <div style="max-width:25em;word-wrap: break-word; font-weight:bold;">
-            <span 
-                [class.error] = "displayedTextCssClass"
-                *ngIf = "showHelpText"
-            >
-                {{displayedText}}
-            </span>
-        </div>
+    <div [style.maxwidth] = "showWeeks ? '280px' : '270px'">
+        <span [hidden] = "hiddenFlag" >
+            <datepicker [(ngModel)]="date" 
+                (ngModelChange) = "onDateChange()" 
+                [showWeeks]="showWeeks" 
+                [minDate] = "minDate" 
+                [maxDate] = "maxDate" >
+            </datepicker>
+        </span>
     </div>
 </span>
+<div style="max-width:25em;word-wrap: break-word; font-weight:bold;">
+    <span 
+        [class.error] = "displayedTextCssClass"
+        *ngIf = "showHelpText"
+    >
+        {{displayedText}}
+    </span>
+</div>

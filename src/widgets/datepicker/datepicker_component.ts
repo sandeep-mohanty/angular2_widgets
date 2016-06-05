@@ -284,12 +284,12 @@ export class DatepickerComponent implements OnInit {
         
         if ( month > 0 && month < 13 ) {
             
-            if ( (monthsWith31Days.indexOf(month) !== -1) && ( day < 0 || day > 31) ) {
+            if ( (monthsWith31Days.indexOf(month) !== -1) && ( day < 1 || day > 31) ) {
                 
                 errorObject["day"] = "Day should be in the range 1 to 31 for the specified month";
                 return false;
                 
-            } else if ( (monthsWith30Days.indexOf(month) !== -1) && ( day < 0 || day > 30) ) {
+            } else if ( (monthsWith30Days.indexOf(month) !== -1) && ( day < 1 || day > 30) ) {
                 errorObject["day"] = "Day should be in the range 1 to 30 for the specified month";
                 return false;
                 
@@ -297,7 +297,7 @@ export class DatepickerComponent implements OnInit {
                 
                 if (this.isLeapYear(year) && (month) == 2) {
                     
-                    if (day < 0 || day > 29) {
+                    if (day < 1 || day > 29) {
                         
                         errorObject["day"] = "Day should be in the range 1 to 29 for the specified month & year";
                         return false;
@@ -305,7 +305,7 @@ export class DatepickerComponent implements OnInit {
                     } 
                 } else if (!this.isLeapYear(year) && (month) == 2) {
                     
-                    if (day < 0 || day > 28) {
+                    if (day < 1 || day > 28) {
                         
                         errorObject["day"] = "Day should be in the range 1 to 28 for the specified month & year";
                         return false; 
