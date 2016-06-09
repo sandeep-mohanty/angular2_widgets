@@ -3,7 +3,7 @@
     style="display: inline-block">
     <span [ngFormModel] = "dateControlGroup">
         <input id = "widget_datepicker_text_control" type="text" 
-            [disabled] = "disableTyping" 
+            [readonly] = "disableTyping" 
             [placeholder]="dateFormat" 
             [ngFormControl] = "dateControlGroup.controls['dateInput']"
             [(ngModel)] = "formattedDate"
@@ -26,16 +26,18 @@
                 (ngModelChange) = "onDateChange()" 
                 [showWeeks]="showWeeks" 
                 [minDate] = "minDate" 
-                [maxDate] = "maxDate" >
+                [maxDate] = "maxDate"
+                [minMode] = "'day'" 
+                [maxMode] = "'day'">
             </datepicker>
         </span>
     </div>
 </span>
-<div style="max-width:25em;word-wrap: break-word; font-weight:bold;">
+<div *ngIf = "showHelpText">
     <span 
-        [class.error] = "displayedTextCssClass"
-        *ngIf = "showHelpText"
-    >
+        [ngClass] = "{'error glyphicon glyphicon-remove-sign':displayedTextCssClass}">
+    </span>
+    <span [class.error] = "displayedTextCssClass" style="max-width:25em;word-wrap: break-word; font-weight:bold;">
         {{displayedText}}
     </span>
 </div>
