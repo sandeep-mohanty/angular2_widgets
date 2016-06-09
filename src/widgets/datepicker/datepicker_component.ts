@@ -266,6 +266,11 @@ export class DatepickerComponent implements OnInit {
         let indexOfDayToken = formatTokens.indexOf("DD");
         let day = Number(dateTokens[indexOfDayToken]);
         
+        if (isNaN(year) || isNaN(month) || isNaN(day) ) {
+            errorObject["invalidFormat"] = "Invalid date format. Please check the format";
+            return false;            
+        }
+        
         let monthsWith30Days = [4,6,9,11];
         let monthsWith31Days = [1,3,5,8,10,12];
         
@@ -339,10 +344,6 @@ export class DatepickerComponent implements OnInit {
 
         let errorObject = {};
         let dateString = control.value;
-        
-        if (dateString.length < 0 || dateString.length > 10 ){
-            return errorObject["length"] = "Invalid Date string length";
-        }
         
         if ( ! this.validateDate(dateString, this.dateFormat, errorObject)) {
             
