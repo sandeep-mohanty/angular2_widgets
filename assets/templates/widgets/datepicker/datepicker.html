@@ -5,7 +5,7 @@
         <input id = "widget_datepicker_text_control" type="text" 
             [readonly] = "disableTyping" 
             [placeholder]="dateFormat" 
-            [ngFormControl] = "dateControlGroup.controls['dateInput']"
+            [ngFormControl] = "dateControlGroup.controls[controlName]"
             [(ngModel)] = "formattedDate"
             [class.error] = "displayedTextCssClass" 
             maxlength = "10" 

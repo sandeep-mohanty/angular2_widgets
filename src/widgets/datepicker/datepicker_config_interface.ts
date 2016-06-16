@@ -1,7 +1,8 @@
 import {ControlGroup} from "@angular/common";
 
 export interface DatepickerConfigInterface{
-    
+   
+   controlName ?: string; // The name of the date control
    initDate ?: Date; // The initial value of the datepicker control. Default value is current date.
    disableTyping ?: boolean; // Whether manually typing of date should be allowed. 
    dateFormat ?: string; // Date format for the datepicker control. Default format is "MM/DD/YYYY".

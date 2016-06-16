@@ -26,6 +26,7 @@ export class DatePickerConfigComponent {
     }
     
     applySettings(configurations){
+        this.configuration.controlName = configurations.controlName;
         this.configuration.initDate = this.dateStringToDateObject(configurations.initDate, "MM/DD/YYYY");
         this.configuration.minDate = this.dateStringToDateObject(configurations.minDate, "MM/DD/YYYY");
         this.configuration.maxDate = this.dateStringToDateObject(configurations.maxDate, "MM/DD/YYYY");

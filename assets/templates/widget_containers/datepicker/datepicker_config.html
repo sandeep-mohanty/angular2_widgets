@@ -7,6 +7,12 @@
     <section class="panel-body" [hidden]="!_show_hide_config">
         <form (ngSubmit) = "applySettings(f.value)" #f="ngForm">
             <strong>
+                Control Name:
+            </strong>
+            <span style="padding-left:15px">
+                <input ngControl = "controlName" type="text">
+            </span><br/>
+            <strong>
                 Initial Date:
             </strong>
             <span style="padding-left:15px">

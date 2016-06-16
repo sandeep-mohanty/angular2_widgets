@@ -16,6 +16,7 @@ export class DatepickerComponent implements OnInit {
     private datePickerConfig:any;
     
     // For date picker textbox
+    private controlName:string;
     private helpText:string;
     private disableTyping:boolean;
     private errorText:string;
@@ -40,15 +41,16 @@ export class DatepickerComponent implements OnInit {
     private maxDate:Date;
     private hiddenFlag:boolean;
     private blurFlag:boolean;
-    private dateChange:EventEmitter<{dateString:string, datePickerControl:Control, date:Date}>;
+    private dateChange:EventEmitter<{dateString:string, datePickerControl:Control, form:ControlGroup, date:Date}>;
     private datePickerWell:Element;
     
     constructor() {
-        this.dateChange = new EventEmitter<{dateString:string, datePickerControl:Control, date:Date}>();
+        this.dateChange = new EventEmitter<{dateString:string, datePickerControl:Control, form:ControlGroup, date:Date}>();
     }
     
     ngOnInit(): void {
- 
+        
+        this.controlName = this.datePickerConfig["controlName"] || "dateInput";
         this.date = new Date();
         this.date = this.datePickerConfig["initDate"] || this.date;
         this.datePickerConfig = this.datePickerConfig || {};
@@ -70,11 +72,22 @@ export class DatepickerComponent implements OnInit {
         
         if (this.datePickerConfig["form"] && this.datePickerConfig["form"] instanceof ControlGroup) {
             this.dateControlGroup = this.datePickerConfig["form"];
-            this.dateControlGroup.addControl("dateInput",this.ngDatePickerTextControl);
+            
+            if (this.controlName) {
+               this.dateControlGroup.addControl(this.controlName,this.ngDatePickerTextControl); 
+            } else {
+                this.dateControlGroup.addControl("dateInput",this.ngDatePickerTextControl);
+            }
+            
         } else {
             this.dateControlGroup = new ControlGroup({
                 dateInput: this.ngDatePickerTextControl
             });
+            
+            if (this.controlName) {
+               this.dateControlGroup.removeControl("dateInput");
+               this.dateControlGroup.addControl(this.controlName,this.ngDatePickerTextControl); 
+            }
         }
 
         this.onDateChange();
@@ -88,7 +101,8 @@ export class DatepickerComponent implements OnInit {
         this.dateChange.emit({
             dateString: this.formattedDate,
             datePickerControl: this.ngDatePickerTextControl,
-            date:this.date
+            form: this.dateControlGroup,
+            date: this.date
         });
         
         //Since this event is triggered only when date is triggered via date picker control, we need to check for errors
@@ -391,10 +405,11 @@ export class DatepickerComponent implements OnInit {
            this.displayedTextCssClass = false;
            
            this.dateChange.emit({
-                dateString: this.formattedDate,
-                datePickerControl:this.ngDatePickerTextControl,
-                date: this.date
-            });       
+            dateString: this.formattedDate,
+            datePickerControl: this.ngDatePickerTextControl,
+            form: this.dateControlGroup,
+            date: this.date
+        });       
        }
     }
 

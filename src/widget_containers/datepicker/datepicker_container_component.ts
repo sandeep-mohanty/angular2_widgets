@@ -26,7 +26,7 @@ export class DatepickerContainerComponent {
         // Date picker properties
         this.datePickerTitle = "Date Picker Widget";
         this.datePickerConfig = {
-            
+            controlName: "",
             initDate: null,
             disableTyping: false,
             dateFormat: "", 
@@ -38,6 +38,7 @@ export class DatepickerContainerComponent {
             form: null,
             immediateFeedbackRequired: true
         };
+        this.datePickerConfig["controlName"] = "dueDate";
         this.datePickerConfig["helpText"] = "";
         this.datePickerConfig["dateFormat"] = "MM/DD/YYYY";
         this.datePickerConfig["initDate"] = new Date("12/31/2016");
@@ -62,6 +63,11 @@ export class DatepickerContainerComponent {
     
     updateConfigChangeFlag(){
         this.configChangeFlag = false;
+        let testControl = new Control("",Validators.required);
+        this.datePickerConfig["form"] = new ControlGroup({
+            testControl: testControl
+        });
+        this.datePickerConfig["form"].removeControl("testControl");
         setTimeout(() => {
            this.configChangeFlag = true; 
         },0);
