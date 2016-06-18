@@ -1,13 +1,3 @@
-//Here we are registering the directory which will contain all the transpiled javascript output files
-System.config({
-    packages: {
-      dist: {
-        format: 'register',
-        defaultExtension: 'js'
-      }
-    }
-});
-
 // This just sets the HTML title for the page
 (function setHeadTitle(document) {
     let htmlHeadTitle: string = "Angular2 Widgets";
