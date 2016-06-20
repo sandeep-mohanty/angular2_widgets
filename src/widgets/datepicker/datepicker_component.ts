@@ -405,11 +405,11 @@ export class DatepickerComponent implements OnInit {
            this.displayedTextCssClass = false;
            
            this.dateChange.emit({
-            dateString: this.formattedDate,
-            datePickerControl: this.ngDatePickerTextControl,
-            form: this.dateControlGroup,
-            date: this.date
-        });       
+                dateString: this.formattedDate,
+                datePickerControl: this.ngDatePickerTextControl,
+                form: this.dateControlGroup,
+                date: this.date
+            });       
        }
     }
 
